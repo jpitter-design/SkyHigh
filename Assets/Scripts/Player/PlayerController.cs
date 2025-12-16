@@ -1,29 +1,65 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject Player;
-    public float speed =  0f;
-    public float jump = 0f;
+    private float speed =  15f;
+    private float jumpForce = 8;
 
+    private Rigidbody PlayerRb;
+
+
+    public GameManager start;
+    public float delayTime = 1.0f;
+
+    private void Start()
+    {
+        PlayerRb = GetComponent<Rigidbody>();
+        Starts();
+
+    }
     // Update is called once per frame
+    IEnumerator Starts()
+    {
+
+        yield return new WaitForSeconds(delayTime);
+        start = GetComponent<GameManager>();
+
+
+    }
     void Update()
     {
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
-        }
+        //start.StartGame();
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        //if (!start.IsGameActive == false)
+        if (start.IsGameActive == true)
         {
-            transform.Translate(new Vector3(-speed, 0, 0) * Time.deltaTime);
+            {
+                PlayerRb.useGravity = true;
+                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+                {
+                    transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
+                }
+
+                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                {
+                    transform.Translate(new Vector3(-speed, 0, 0) * Time.deltaTime);
+                }
+            }
+            if (transform.position.y < -3.2)
+            {
+                //start.GameOver();
+                Destroy(gameObject);
+
+            }
         }
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (CompareTag("Player") && CompareTag("Platform"))
-        {
 
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            PlayerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
 }
