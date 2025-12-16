@@ -5,7 +5,6 @@ public class BirdAi : MonoBehaviour
     public GameObject Bird;
     public float move; // Move the bird right
     public float PushPower = 10;
-    public GameManager start;
     void Start()
     {
 

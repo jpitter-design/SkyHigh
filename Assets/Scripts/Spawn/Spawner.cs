@@ -91,8 +91,8 @@ public class Spawner : MonoBehaviour
         // Get a random x Positon 
             LastYposition += minYSpacing;
             //The X spawn range 
-            float leftBound = Random.Range(-7.09f, playerTransform.position.x-1);
-            float rightBound = Random.Range(playerTransform.position.x + 1, 10f);
+            float leftBound = Random.Range(-5f, playerTransform.position.x-3f);
+            float rightBound = Random.Range(playerTransform.position.x + 3f, 8f);
             float RandomPosX = Random.Range(leftBound, rightBound);
 
 
@@ -108,12 +108,6 @@ public class Spawner : MonoBehaviour
     public void BirdSpawn()
     {
         float leftBound = -10f;
-        //float rightBound = 10f;
-        //float RandomPosX = Random.Range(leftBound, rightBound);
-
-
-
-        // Spawn to left or Right of player
 
         Vector3 BspawnPos = new Vector3(leftBound, playerTransform.position.y, transform.position.z);
         GameObject newPlatform = Instantiate(BirdPrefab, BspawnPos, Quaternion.identity);
